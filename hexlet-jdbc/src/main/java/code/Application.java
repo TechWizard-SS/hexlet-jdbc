@@ -10,7 +10,7 @@ import java.sql.Statement;
  * Демонстрирует:
  * - Создание таблицы
  * - Вставку данных через PreparedStatement
- * - Пакетную вставку (в текущей версии — по одной записи, но с RETURN_GENERATED_KEYS)
+ * - Пакетную вставку (в текущей версии — по одной записи)
  * - Удаление записи по условию
  * - Выборку и вывод всех оставшихся записей
  *
@@ -18,6 +18,7 @@ import java.sql.Statement;
  */
 public class Application {
     public static void main(String[] args) throws SQLException {
+
         try (var conn = DriverManager.getConnection("jdbc:h2:mem:hexlet_test")) {
 
             String createSql = """
