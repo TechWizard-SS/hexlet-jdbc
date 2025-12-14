@@ -2,19 +2,22 @@ package code;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /**
- * Пример работы с JDBC и in-memory базой H2.
+ * Пример работы с базой данных напрямую через JDBC (без DAO).
  *
- * Демонстрирует:
- * - Создание таблицы
- * - Вставку данных через PreparedStatement
- * - Пакетную вставку (в текущей версии — по одной записи)
- * - Удаление записи по условию
- * - Выборку и вывод всех оставшихся записей
+ * <p>Иллюстрирует "сырой" подход:
+ * <ul>
+ *   <li>SQL-запросы в основном коде;</li>
+ *   <li>Отсутствие инкапсуляции логики работы с БД;</li>
+ *   <li>Сложность поддержки при росте функционала.</li>
+ * </ul>
  *
- * Используется для обучения основам JDBC без фреймворков.
+ * <h2>Цель этого класса:</h2>
+ * Показать, почему нужен паттерн DAO — чтобы избежать такого "размазывания" SQL по всему коду.
+ *
+ * <h2>Используемая БД:</h2>
+ * H2 в memory-режиме: {@code jdbc:h2:mem:hexlet_test}
  */
 public class Application {
     public static void main(String[] args) throws SQLException {
@@ -62,11 +65,10 @@ public class Application {
 
             // Выборка
             String selectSql = "SELECT id, username, phone FROM users ORDER BY username";
-            try (var selectStmt = conn.createStatement();
-                 var rs = selectStmt.executeQuery(selectSql)) {
+            try (var selectStmt = conn.createStatement(); var rs = selectStmt.executeQuery(selectSql)) {
 
-                System.out.println("\nRemaining users:");
-                while (rs.next()) {
+                 System.out.println("\nRemaining users:");
+                 while (rs.next()) {
                     System.out.printf("id=%d, username=%s, phone=%s%n",
                             rs.getLong("id"),
                             rs.getString("username"),

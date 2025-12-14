@@ -2,31 +2,28 @@ package code;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
- * Демонстрационное приложение для работы с DAO-паттерном и базой данных H2 через JDBC.
+ * Демонстрация использования паттерна DAO через класс {@link UserDAO}.
  *
- * Этот класс показывает полный жизненный цикл сущности {@link User}:
+ * <p>Показывает преимущества:
+ * <ul>
+ *   <li>Чистый и понятный клиентский код;</li>
+ *   <li>Отделение логики работы с БД;</li>
+ *   <li>Легкость тестирования и поддержки.</li>
+ * </ul>
  *
- * Создание таблицы в in-memory базе H2
- * Сохранение нового пользователя (INSERT)
- * Поиск пользователя по идентификатору (SELECT)
- * Обновление существующего пользователя (UPDATE)
- * Удаление пользователя (DELETE)
+ * <h2>Выполняемые операции:</h2>
+ * <ol>
+ *   <li>Создание и сохранение пользователя;</li>
+ *   <li>Поиск по ID;</li>
+ *   <li>Обновление данных;</li>
+ *   <li>Удаление и проверка отсутствия.</li>
+ * </ol>
  *
- *
- * Используется в обучающих целях для демонстрации:
- *
- * Работы с {@link java.sql.Connection} и try-with-resources
- * Паттерна Data Access Object (DAO)
- * Базовых CRUD-операций без ORM или Spring
- *
- *
- * Зависимости:
- *
- * Драйвер H2 (в classpath)
- * Классы {@link User} и {@link UserDAO} в том же пакете
- *
+ * <h2>Безопасность:</h2>
+ * Можно использовать {@link Optional} для избежания NullPointerException.
  */
 public class Application2 {
     public static void main(String[] args) throws SQLException {
